@@ -1,5 +1,4 @@
-# SpotiPlayer
-a music player that designed like spotify.
+![SpotiPlayer](https://github.com/sungbin5304/SpotiPlayer/blob/master/banner.png)
 
 # Functions
 1. Lyrics
