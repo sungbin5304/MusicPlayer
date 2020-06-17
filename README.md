@@ -14,6 +14,7 @@
 - [ ] 11. Queue shuffle
 - [ ] 12. DeepLink
 - [ ] 13. Sound file scheme 
+- [ ] 14. Background Play
 
 [comment]: <Functions> (만들었으면 [ ] 을 [x] 로 바꾸셈)
 
