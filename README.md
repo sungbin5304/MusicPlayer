@@ -16,7 +16,7 @@
 - [ ] 13. Sound file scheme 
 - [ ] 14. Background Play
 
-[comment]: <Functions> (만들었으면 [ ] 을 [x] 로 바꾸셈)
+[comment]: <Functions> (만들었으면 [ ] 을 [x] 로 바꾸셈, 나도 알거등 [x], [] 이거 체크박스인거)
 
 # Developer
 [`SungBin`](https://github.com/sungbin5304) and [`Nenka`](https://github.com/NenkaLab)
