@@ -12,7 +12,7 @@
 - [ ] 9. Songs repeat from A to B
 - [ ] 10. Songs chart
 
-[comment]: <> (만들었으면 [ ] 을 [x] 로 바꾸셈)
+[comment]: <Functions> (만들었으면 [ ] 을 [x] 로 바꾸셈)
 
 # Developer
 [`SungBin`](https://github.com/sungbin5304) and [`Nenka`](https://github.com/NenkaLab)
