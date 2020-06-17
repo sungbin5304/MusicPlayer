@@ -11,6 +11,9 @@
 - [ ] 8. Song repeat
 - [ ] 9. Songs repeat from A to B
 - [ ] 10. Songs chart
+- [ ] 11. Queue shuffle
+- [ ] 12. DeepLink
+- [ ] 13. Sound file scheme 
 
 [comment]: <Functions> (만들었으면 [ ] 을 [x] 로 바꾸셈)
 
