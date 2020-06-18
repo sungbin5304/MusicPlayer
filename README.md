@@ -6,7 +6,7 @@
 - [ ] 3. Songs background Image
 - [ ] 4. Playlist
 - [ ] 5. Queue list
-- [ ] 6. Songs recommand
+- [ ] 6. Songs recommend
 - [ ] 7. Sleep timer
 - [ ] 8. Song repeat
 - [ ] 9. Songs repeat from A to B
