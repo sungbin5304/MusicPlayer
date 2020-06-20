@@ -6,20 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/margin_default"
+    tools:background="@drawable/bg_gradient_main"
     tools:context=".ui.fragment.main.MainFragment"
     tools:ignore="MissingConstraints">
 
     <Space
         android:id="@+id/space_margin"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_twice"/>
+        android:layout_height="40dp"/>
 
     <TextView
         android:id="@+id/tv_recently_played"
         android:textColor="@color/md_white_1000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:text="@string/recently_played"
         app:layout_constraintTop_toBottomOf="@id/space_margin"/>
 
@@ -39,7 +40,7 @@
         android:layout_height="wrap_content"
         android:text="@string/song"
         android:textColor="@color/md_white_1000"
-        android:textSize="30sp"
+        android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@+id/rv_recently_played" />
 
     <androidx.recyclerview.widget.RecyclerView
