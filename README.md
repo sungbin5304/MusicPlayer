@@ -18,6 +18,9 @@
 
 [comment]: <Functions> (만들었으면 [ ] 을 [x] 로 바꾸셈, 나도 알거등 [x], [] 이거 체크박스인거)
 
+# ChangeLog
+You can see changelog at [here](https://github.com/sungbin5304/SpotiPlayer/blob/master/CHANGELOG.md).
+
 # Developer
 [`SungBin`](https://github.com/sungbin5304) and [`Nenka`](https://github.com/NenkaLab)
 
