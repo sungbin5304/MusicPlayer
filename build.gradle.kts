@@ -18,6 +18,14 @@ allprojects {
         jcenter()
         maven { url = uri("https://jitpack.io") }
         maven { url = uri("https://oss.jfrog.org/libs-snapshot") }
+        maven { url = uri("https://dl.bintray.com/android/android-tools") }
+
+        mavenLocal()
+        mavenCentral()
+
+        flatDir {
+            dirs("aars")
+        }
     }
 }
 
