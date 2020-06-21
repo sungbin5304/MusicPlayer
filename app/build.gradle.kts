@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Apps.compileSdk)
+    compileSdkVersion(Application.compileSdk)
     defaultConfig {
-        minSdkVersion(Apps.minSdk)
-        targetSdkVersion(Apps.targetSdk)
-        versionCode = Apps.versionCode
-        versionName = Apps.versionName
+        minSdkVersion(Application.minSdk)
+        targetSdkVersion(Application.targetSdk)
+        versionCode = Application.versionCode
+        versionName = Application.versionName
         multiDexEnabled = true
         setProperty("archivesBaseName", "v$versionName($versionCode)")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -57,8 +57,8 @@ dependencies {
 
     implementation(Libraries.Network.Retrofit)
 
-    implementation(Libraries.Reactive.RxAndroid)
     implementation(Libraries.Reactive.RxKotlin)
+    implementation(Libraries.Reactive.RxAndroid)
 
     implementation(Libraries.Utils.AndroidUtils)
     implementation(Libraries.Utils.AdapterHelper)
@@ -70,4 +70,6 @@ dependencies {
     testImplementation(TestLibrary.Junit)
     androidTestImplementation(AndroidTestLibraries.Junit)
     androidTestImplementation(AndroidTestLibraries.Espresso)
+
+    kapt(Annotation.Glide)
 }

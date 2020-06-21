@@ -3,6 +3,7 @@ package com.sungbin.musicplayer.ui.fragment
 import android.animation.Animator
 import android.content.Context
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
@@ -15,6 +16,11 @@ import com.sungbin.sungbintool.ToastUtils
  */
 
 open class BaseFragment : Fragment(){
+
+    operator fun TextView.plusAssign(text:String){
+        this.text = text
+    }
+
     fun String.toastS(context: Context?, isLong: Boolean = false){
         context?.run {
             ToastUtils.show(

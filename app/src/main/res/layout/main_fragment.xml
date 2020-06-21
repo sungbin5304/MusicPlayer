@@ -28,9 +28,10 @@
         android:id="@+id/rv_recently_played"
         android:overScrollMode="never"
         android:scrollbars="horizontal"
-        android:layout_marginTop="@dimen/margin_half"
+        android:layout_marginTop="@dimen/margin_default"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="175dp"
+        tools:listitem="@layout/layout_songs"
         app:layout_constraintTop_toBottomOf="@+id/tv_recently_played" />
 
     <TextView
@@ -44,9 +45,12 @@
         app:layout_constraintTop_toBottomOf="@+id/rv_recently_played" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_songs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/margin_half"
+        android:overScrollMode="never"
+        android:scrollbars="vertical"
+        android:layout_marginTop="@dimen/margin_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_songs" />
 

@@ -1,6 +1,6 @@
 import org.gradle.api.JavaVersion
 
-object Apps {
+object Application {
     const val compileSdk = 29
     const val minSdk = 21
     const val targetSdk = 29
@@ -40,6 +40,10 @@ object Versions {
 
     val sourceCompat = JavaVersion.VERSION_1_8
     val targetCompat = JavaVersion.VERSION_1_8
+}
+
+object Annotation {
+    const val Glide = "com.github.bumptech.glide:compiler:${Versions.Glide}"
 }
 
 object Libraries {
