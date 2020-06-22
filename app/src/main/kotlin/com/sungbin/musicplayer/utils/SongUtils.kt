@@ -5,42 +5,46 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import com.sungbin.musicplayer.dto.SongItem
-import java.io.FileNotFoundException
-import java.io.IOException
+
 
 object SongUtils {
+    private val artworkUri = Uri.parse("content://media/external/audio/albumart")
+
     fun getAllAudioData(context: Context): ArrayList<SongItem> {
         val list = ArrayList<SongItem>()
         val contentResolver = context.contentResolver
         val uri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val selection = "${MediaStore.Audio.Media.IS_MUSIC} != 0"
         val sortOrder = "${MediaStore.Audio.Media.TITLE} ASC"
-        val cursor = contentResolver.query(uri, null, selection, null, sortOrder)
-        cursor!!.moveToFirst()
-        if (cursor.count > 0) {
-            while (cursor.moveToNext()) {
-                val trackId =
-                    cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media._ID))
-                val albumId =
-                    cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
-                val title =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE))
-                val album =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))
-                val artist =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))
-                /*val duration =
-                    cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION)) //이게 api 29 부터 추가됬네;;*/
-                /*val path =
-                    cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.DATA)) //DEPRECATED 됬네?*/
-                list.add(SongItem(title, artist, null, trackId, albumId))
+        return contentResolver.query(uri, null, selection, null, sortOrder)?.use{
+            if (it.count > 0) {
+                while (it.moveToNext()) {
+                    val trackId =
+                        it.getLong(it.getColumnIndex(MediaStore.Files.FileColumns._ID))
+                    val albumId =
+                        it.getLong(it.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))
+                    val title =
+                        it.getString(it.getColumnIndex(MediaStore.Audio.Media.TITLE))
+                    val album =
+                        it.getString(it.getColumnIndex(MediaStore.Audio.Media.ALBUM))
+                    val artist =
+                        it.getString(it.getColumnIndex(MediaStore.Audio.Media.ARTIST))
+                    val albumUri
+                        = getAlbumCoverUri(albumId).toString()
+
+                    list.add(SongItem(title, artist, albumUri, trackId, albumId))
+                }
             }
-        }
-        cursor.close()
-        return list
+            list
+        } ?: arrayListOf()
+    }
+
+    fun getAlbumCoverUri(
+        albumId: Long
+    ): Uri {
+        return ContentUris.withAppendedId(artworkUri, albumId)
     }
 
     fun getAlbumCoverBitmap(
@@ -50,18 +54,11 @@ object SongUtils {
         height: Int
     ): Bitmap? {
         val bitmapOptionsCache = BitmapFactory.Options()
-        val artworkUri =
-            Uri.parse("content://media/external/audio/albumart")
         val res = context.contentResolver
-        val uri = ContentUris.withAppendedId(artworkUri, albumId)
-        var fd: ParcelFileDescriptor? = null
-        try {
-            fd = res.openFileDescriptor(uri, "r")
+        val uri = getAlbumCoverUri(albumId)
+        return res.openFileDescriptor(uri, "r")?.use { fd ->
             var sampleSize = 1
             bitmapOptionsCache.inJustDecodeBounds = true
-            BitmapFactory.decodeFileDescriptor(
-                fd!!.fileDescriptor, null, bitmapOptionsCache
-            )
             var nextWidth = bitmapOptionsCache.outWidth shr 1
             var nextHeight = bitmapOptionsCache.outHeight shr 1
             while (nextWidth > weight && nextHeight > height) {
@@ -81,14 +78,7 @@ object SongUtils {
                     bitmap = tmp
                 }
             }
-            return bitmap
-        } catch (ignored: FileNotFoundException) {
-        } finally {
-            try {
-                fd?.close()
-            } catch (ignored: IOException) {
-            }
-        }
-        return null
+            bitmap
+        } ?: Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
     }
 }

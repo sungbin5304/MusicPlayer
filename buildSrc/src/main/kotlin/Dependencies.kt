@@ -35,7 +35,7 @@ object Versions {
     const val FlexboxLayout = "2.0.1"
     const val Preference = "1.1.1"
     const val Glide = "4.11.0"
-    const val Fresco = "0.5.0+"
+    const val Fresco = "2.2.0"
 
     const val Retrofit = "2.9.0"
 
