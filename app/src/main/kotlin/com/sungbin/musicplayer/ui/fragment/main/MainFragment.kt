@@ -4,19 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.sungbin.musicplayer.GlideApp
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.sungbin.musicplayer.R
-import com.sungbin.musicplayer.dto.SongItem
 import com.sungbin.musicplayer.ui.fragment.BaseFragment
-import com.sungbin.musicplayer.utils.SongUtils
-import com.sungbin.recyclerviewadaptermaker.library.AdapterHelper
-import com.sungbin.recyclerviewadaptermaker.library.options.Option
-import com.sungbin.recyclerviewadaptermaker.library.options.Padding
-import com.sungbin.sungbintool.ui.TagableRoundImageView
+import com.sungbin.musicplayer.ui.fragment.main.adapter.MainItemAdapter
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment : BaseFragment() {
@@ -26,6 +22,8 @@ class MainFragment : BaseFragment() {
     }
 
     private lateinit var viewModel: MainViewModel
+    private lateinit var viewAdapter: RecyclerView.Adapter<*>
+    private lateinit var viewManager: FlexboxLayoutManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -34,17 +32,41 @@ class MainFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        val context = requireContext()
+
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewManager = FlexboxLayoutManager(context).apply {
+            flexWrap = FlexWrap.WRAP
+            justifyContent = JustifyContent.CENTER
+            alignItems = AlignItems.CENTER
+        }
+        viewAdapter = MainItemAdapter().apply {
+            viewModel = this@MainFragment.viewModel
+        }
+
+        if (viewModel.songsItem.value.isNullOrEmpty())
+            viewModel.initSongs(context)
+        if (viewModel.recentlySongsItem.value.isNullOrEmpty())
+            viewModel.testRecentlySongs(context)
+
+        list.setItemViewCacheSize(20)
+        list.setHasFixedSize(true)
+        list.adapter = viewAdapter
+        list.layoutManager = viewManager
+
+
+        /*
         AdapterHelper
             .with(rv_recently_played)
             .bindLayout(R.layout.layout_songs)
             .addViewBindListener { item, view, position ->
                 val (name, artist, albumImageUrl, trackId, albumId) = item[position] as SongItem
-                val albumImage = view.findViewById<TagableRoundImageView>(R.id.triv_song_cover)
+                val albumImage = view.findViewById<SimpleDraweeView>(R.id.triv_song_cover)
                 val songName = view.findViewById<TextView>(R.id.tv_song_name)
                 val songArtist = view.findViewById<TextView>(R.id.tv_song_artist)
 
-                GlideApp.with(context!!).load(albumImageUrl ?: R.drawable.sample_album_image).into(albumImage)
+                albumImage.setImageURI(Uri.parse(albumImageUrl), null)
                 songName += name
                 songArtist += artist
             }
@@ -53,25 +75,32 @@ class MainFragment : BaseFragment() {
         rv_recently_played.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.HORIZONTAL, false
         )
+        rv_recently_played.setItemViewCacheSize(20)
+        rv_recently_played.setHasFixedSize(true)
 
         AdapterHelper
             .with(rv_songs)
             .bindLayout(R.layout.layout_songs)
             .addViewBindListener { item, view, position ->
                 val (name, artist, albumImageUrl, trackId, albumId) = item[position] as SongItem
-                val albumImage = view.findViewById<TagableRoundImageView>(R.id.triv_song_cover)
+                val albumImage = view.findViewById<SimpleDraweeView>(R.id.triv_song_cover)
                 val songName = view.findViewById<TextView>(R.id.tv_song_name)
                 val songArtist = view.findViewById<TextView>(R.id.tv_song_artist)
-
-                val albumImageBitmap = SongUtils.getAlbumCoverBitmap(context!!, albumId, 100, 100)
-
-                GlideApp.with(context!!).load(albumImageBitmap ?: R.drawable.sample_album_image).into(albumImage)
+                albumImage.setImageURI(albumImageUrl, null)
                 songName += name
                 songArtist += artist
             }
-            .addOption(Option(null, Padding(0, 0, 50, 0)))
-            .create(SongUtils.getAllAudioData(context!!))
-        rv_songs.layoutManager = GridLayoutManager(context, 3)
+            .addOption(Option(null, Padding(0, 0, 0, 8)))
+            .create(SongUtils.getAllAudioData(context))
+        rv_songs.layoutManager = FlexboxLayoutManager(context).apply {
+            flexWrap = FlexWrap.WRAP
+            justifyContent = JustifyContent.SPACE_BETWEEN
+            alignItems = AlignItems.CENTER
+        }
+        rv_songs.setItemViewCacheSize(20)
+        rv_songs.setHasFixedSize(true)
+         */
+
     }
 
 }

@@ -24,24 +24,32 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/bg_top_round"
+        android:elevation="4dp"
         android:paddingStart="@dimen/margin_default"
         android:paddingEnd="@dimen/margin_default"
         android:paddingTop="@dimen/margin_half"
         android:paddingBottom="@dimen/margin_half"
         app:layout_constraintBottom_toBottomOf="@+id/view_Line">
 
-        <com.sungbin.sungbintool.ui.TagableRoundImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/triv_song_cover"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:contentDescription="@string/album_image"
-            android:scaleType="fitXY"
-            android:src="@drawable/sample_album_image"
+            app:actualImageScaleType="fitXY"
+            app:placeholderImage="@drawable/sample_album_image"
+            app:placeholderImageScaleType="fitCenter"
+            app:failureImage="@drawable/sample_album_image"
+            app:failureImageScaleType="fitCenter"
+            app:roundedCornerRadius="@dimen/margin_half"
+            app:roundTopLeft="true"
+            app:roundTopRight="true"
+            app:roundBottomLeft="true"
+            app:roundBottomRight="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:triv_imageRadius="@dimen/margin_half" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/linearLayout4"
@@ -116,6 +124,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="@color/md_black_1000"
+        android:alpha=".2"
         app:layout_constraintBottom_toBottomOf="@+id/fl_container" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -123,7 +132,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/md_grey_700"
+        app:backgroundTint="@color/md_grey_700"
         app:itemIconTint="@color/md_white_1000"
         app:itemTextColor="@color/md_white_1000"
         app:layout_constraintBottom_toBottomOf="parent"
